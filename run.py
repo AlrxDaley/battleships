@@ -9,7 +9,7 @@ def main_menu():
         selected = input("Select an option:\n")
 
         if selected == '1':
-            print("Running Game")
+            print("Running Game\n")
             break
         elif selected == '2':
             print("Setting Grid Size")
@@ -18,10 +18,18 @@ def main_menu():
             quit()
         else:
             print("That isnt an option. Select another option")
+
+
+def grid_setup(width,height):
+    grid = [[0 for x in range(width)] for y in range(height)]
+
+    for x in range(len(grid)):
+        print(grid[x])
             
 
 
+def main():
+    main_menu()
+    grid_setup(6,6)
 
-
-
-main_menu()
+main()
