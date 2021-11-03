@@ -1,10 +1,10 @@
-
+from PIL import imresize
 
 def main_menu():
 
     while True:
         print("-----------\nBATTLESHIPS\n-----------")
-        print("1.Play\n2.Select grid size\n3.Quit\n")
+        print("1.Play Game\n2.Select grid size\n3.Quit\n")
 
         selected = input("Select an option:\n")
 
@@ -21,12 +21,20 @@ def main_menu():
 
 
 def grid_setup(width,height):
-    grid = [[0 for x in range(width)] for y in range(height)]
+    grid = [[0 for x in range(width + 1)] for y in range(height +1)]
+    grid_top = [0 for x in range(width +1)]
 
-    for x in range(len(grid)):
+    for x in range(len(grid_top)):
+        grid_top[x] = x
+
+    print(grid_top)
+ 
+    for x in range(1,len(grid)):
+        grid[x][0] = x
         print(grid[x])
 
     print("\n")
+
 
 
 def setting_ship_location():
@@ -38,12 +46,12 @@ def setting_ship_location():
         yship = input("Please select the y location of your ship:\n")
         ship_location.append([xship,yship])
         
-    print(ship_location[0][1])
+    print(ship_location[1])
 
 
 def main():
     main_menu()
-    grid_setup(6,6)
+    grid_setup(9,9)
     setting_ship_location()
 
 main()
