@@ -1,5 +1,12 @@
 
 import os
+#Global variables
+ANSI_WHITE = "\033[37m"
+ANSI_RED = "\033[31m"
+NEW_LINE = os.linesep
+
+grid_width = 10
+grid_height = 10
 
 def main_menu():
 
@@ -7,7 +14,7 @@ def main_menu():
 
     while True:
         print("-----------\nBATTLESHIPS\n-----------")
-        print("1.Play Game\n2.Select grid size\n3.Quit\n")
+        print("1.Play Game\n2.Quit\n")
 
         selected = input("Select an option:\n")
 
@@ -15,19 +22,20 @@ def main_menu():
             print("Running Game\n")
             break
         elif selected == '2':
-            print("Setting Grid Size")
-            break
-        elif selected == '3':
             quit()
         else:
             print("That isnt an option. Select another option")
 
-ANSI_WHITE = "\033[37m"
-ANSI_RED = "\033[31m"
-NEW_LINE = os.linesep
+def setting_custom_grid_size():
+    print("\n-----------------------------------------")
+    print("To set grid size please use 'Y,X' format")
+    print("-----------------------------------------\n")
 
-grid_width = 0
-grid_height = 0
+    grid_width,grid_height = input("Please enter your desired grid size:\n").split(",")
+
+    return grid_width, grid_height
+
+
 
 def print_grid():
     """Runs through each row checking if one of the index's is equal to 1 and turns it red and then prints the grid
@@ -123,11 +131,10 @@ def update_grid(ship_location):
     print(NEW_LINE)
     print_grid()
 
-
-
 def main():
     main_menu()
-    grid_setup(10,10)
+    custom_grid = setting_custom_grid_size()
+    grid_setup(int(custom_grid[0]),int(custom_grid[1]))
     ship_location = setting_ship_location()
     update_grid(ship_location)
 
