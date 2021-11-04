@@ -5,8 +5,8 @@ ANSI_WHITE = "\033[37m"
 ANSI_RED = "\033[31m"
 NEW_LINE = os.linesep
 
-grid_width = 10
-grid_height = 10
+grid_width = 0
+grid_height = 0
 
 def main_menu():
 
