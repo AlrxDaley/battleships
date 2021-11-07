@@ -35,12 +35,16 @@ def setting_custom_grid_size():
     print("\n-----------------------------------------")
     print("To set grid size please use 'Y,X' format")
     print("-----------------------------------------\n")
+    while True:
+        try:
+            grid_width, grid_height = input(
+            "Please enter your desired grid size (You cannot have more rows than columns):\n"
+        ).split(",")
+            return grid_width, grid_height,False
+        except ValueError:
+            print("You need to enter two values seperated by a ',' \n")
 
-    grid_width, grid_height = input(
-        "Please enter your desired grid size (You cannot have more rows than columns):\n"
-    ).split(",")
-
-    return grid_width, grid_height
+    
 
 
 def print_grid():
@@ -123,37 +127,41 @@ def setting_ship_location():
     print("To enter the location use the 'Y,X' format")
     print("------------------------------------------\n")
 
-    # loops through the amount of boats you can assign
-    for x in range(5):
-        # Assigns the inputed data to the variables
-        yship, xship = input(f"Please select the location for ship num {x+1}\n").split(
-            ","
-        )
+    while True:
+        # loops through the amount of boats you can assign
+        try:
+            for x in range(5):
+                # Assigns the inputed data to the variables
+                yship, xship = input(str(f"Please select the location for ship num {x+1}\n")).split(
+                    ","
+                )
 
-        if (int(yship) + 1) > grid_height or (int(xship) + 1) > grid_width:
-            print("The poition should be within the grid\n")
-            yship, xship = input(f"Please select the location for ship num {x+1}\n").split(
-            ","
-            )
-            ship_location.append([yship, xship])
-            
-        else:
-            # Assigns the variables to the location list
-            ship_location.append([yship, xship])
+                if (int(yship) + 1) > grid_height or (int(xship) + 1) > grid_width:
+                    print("The poition should be within the grid\n")
+                    yship, xship = input(f"Please select the location for ship num {x+1}\n").split(
+                    ","
+                    )
+                    ship_location.append([yship, xship])
+                    
+                else:
+                    # Assigns the variables to the location list
+                    ship_location.append([yship, xship])
 
-    # return the ship location list
-    return ship_location
+            # return the ship location list
+            return ship_location,False
+        except ValueError:
+            print("You need to enter two values seperated by a ',' \n")
 
 
 def update_grid(ship_location):
     """Updates the inputed location of the ship using the ship_location variable/list"""
     for x in range(len(ship_location)):
         # assigns the variable the location of the x axis
-        ship_x = ship_location[x][0]
+        ship_y = ship_location[x][0]
         # assigns the variable the location of the y axis
-        ship_y = ship_location[x][1]
+        ship_x = ship_location[x][1]
         # changes the inputed index into a 1
-        grid[(int(ship_x))][int(ship_y)] = 1
+        grid[ship_y][ship_x] = 1
 
     print(NEW_LINE)
     print_grid()
