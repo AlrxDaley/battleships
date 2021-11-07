@@ -37,7 +37,7 @@ def setting_custom_grid_size():
     print("-----------------------------------------\n")
 
     grid_width, grid_height = input(
-        "Please enter your desired grid size (You must have the same amount of columns as rows):\n"
+        "Please enter your desired grid size (You cannot have more rows than columns):\n"
     ).split(",")
 
     return grid_width, grid_height
@@ -69,7 +69,7 @@ def print_grid():
         try:
             grid[0][y] = y
         except IndexError:
-            print("\nYou must have the same amount of rows as columns")
+            print("\nYou cannot have more rows then columns")
             break
         # Creates a string that starts with the row number surrounded by pipes.
         if y < 10:
