@@ -146,9 +146,9 @@ def setting_ship_location():
                 else:
                     # Assigns the variables to the location list
                     ship_location.append([yship, xship])
-
+            False
             # return the ship location list
-            return ship_location,False
+            return ship_location
         except ValueError:
             print("You need to enter two values seperated by a ',' \n")
 
@@ -161,7 +161,7 @@ def update_grid(ship_location):
         # assigns the variable the location of the y axis
         ship_x = ship_location[x][1]
         # changes the inputed index into a 1
-        grid[ship_y][ship_x] = 1
+        grid[int(ship_y)][int(ship_x)] = 1
 
     print(NEW_LINE)
     print_grid()
