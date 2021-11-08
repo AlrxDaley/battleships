@@ -28,6 +28,13 @@ def main_menu():
             print("That isnt an option. Select another option")
 
 
+def gird_location_checking(yship, xship, ship_location):
+
+    for x in range(len(ship_location)):
+        if ship_location[x] == ship_location[x]:
+            print("working?")
+
+
 def setting_custom_grid_size():
 
     """takes the input from user to define grid size"""
@@ -38,13 +45,11 @@ def setting_custom_grid_size():
     while True:
         try:
             grid_width, grid_height = input(
-            "Please enter your desired grid size (You cannot have more rows than columns):\n"
-        ).split(",")
-            return grid_width, grid_height,False
+                "Please enter your desired grid size (You cannot have more rows than columns):\n"
+            ).split(",")
+            return grid_width, grid_height, False
         except ValueError:
             print("You need to enter two values seperated by a ',' \n")
-
-    
 
 
 def print_grid():
@@ -132,20 +137,24 @@ def setting_ship_location():
         try:
             for x in range(5):
                 # Assigns the inputed data to the variables
-                yship, xship = input(str(f"Please select the location for ship num {x+1}\n")).split(
-                    ","
-                )
+                yship, xship = input(
+                    str(f"Please select the location for ship num {x+1}\n")
+                ).split(",")
 
                 if (int(yship) + 1) > grid_height or (int(xship) + 1) > grid_width:
                     print("The poition should be within the grid\n")
-                    yship, xship = input(f"Please select the location for ship num {x+1}\n").split(
-                    ","
-                    )
+                    yship, xship = input(
+                        f"Please select the location for ship num {x+1}\n"
+                    ).split(",")
                     ship_location.append([yship, xship])
-                    
+                    gird_location_checking(yship, xship, ship_location)
+
                 else:
                     # Assigns the variables to the location list
                     ship_location.append([yship, xship])
+                    print(ship_location)
+                    gird_location_checking(yship, xship, ship_location)
+
             False
             # return the ship location list
             return ship_location
