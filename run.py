@@ -28,13 +28,6 @@ def main_menu():
             print("That isnt an option. Select another option")
 
 
-def gird_location_checking(yship, xship, ship_location):
-
-    for x in range(len(ship_location)):
-        if ship_location[x] == ship_location[x]:
-            print("working?")
-
-
 def setting_custom_grid_size():
 
     """takes the input from user to define grid size"""
@@ -146,13 +139,10 @@ def setting_ship_location():
                     yship, xship = input(
                         f"Please select the location for ship num {x+1}\n"
                     ).split(",")
-                    ship_location.append([yship, xship])
                     gird_location_checking(yship, xship, ship_location)
 
                 else:
                     # Assigns the variables to the location list
-                    ship_location.append([yship, xship])
-                    print(ship_location)
                     gird_location_checking(yship, xship, ship_location)
 
             False
@@ -160,6 +150,16 @@ def setting_ship_location():
             return ship_location
         except ValueError:
             print("You need to enter two values seperated by a ',' \n")
+
+
+def gird_location_checking(yship, xship, ship_location):
+    if grid[int(yship)][int(xship)] == 1:
+        print(ship_location)
+        print("You cannot put a boat there")
+    else:
+        ship_location.append([yship, xship])
+        print(ship_location)
+        update_grid(ship_location)
 
 
 def update_grid(ship_location):
@@ -173,7 +173,6 @@ def update_grid(ship_location):
         grid[int(ship_y)][int(ship_x)] = 1
 
     print(NEW_LINE)
-    print_grid()
 
 
 def main():
