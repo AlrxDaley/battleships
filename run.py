@@ -126,40 +126,50 @@ def setting_ship_location():
     print("------------------------------------------\n")
 
     while True:
+        x = 1
+
         # loops through the amount of boats you can assign
-        try:
-            for x in range(5):
+        while x <= 5:
+            try:
                 # Assigns the inputed data to the variables
                 yship, xship = input(
-                    str(f"Please select the location for ship num {x+1}\n")
+                    str(f"Please select the location for ship num {x}\n")
                 ).split(",")
+                x += 1
 
                 if (int(yship) + 1) > grid_height or (int(xship) + 1) > grid_width:
                     print("The poition should be within the grid\n")
                     yship, xship = input(
-                        f"Please select the location for ship num {x+1}\n"
+                        f"Please select the location for ship num {x}\n"
                     ).split(",")
-                    gird_location_checking(yship, xship, ship_location)
+                    x += 1
+                    gird_location_checking(yship, xship, ship_location, x)
+                    x = int(GLC)
 
                 else:
                     # Assigns the variables to the location list
-                    gird_location_checking(yship, xship, ship_location)
-
-            False
+                    GLC = gird_location_checking(yship, xship, ship_location, x)
+                    x = int(GLC)
             # return the ship location list
-            return ship_location
-        except ValueError:
-            print("You need to enter two values seperated by a ',' \n")
+            except ValueError:
+                print("You need to enter two values seperated by a ',' \n")
+                x - 1
+        False
+        return ship_location
 
 
-def gird_location_checking(yship, xship, ship_location):
+def gird_location_checking(yship, xship, ship_location, x):
+
     if grid[int(yship)][int(xship)] == 1:
-        print(ship_location)
         print("You cannot put a boat there")
+        print(NEW_LINE)
+        x -= 1
+        return x
+
     else:
         ship_location.append([yship, xship])
-        print(ship_location)
         update_grid(ship_location)
+        return x
 
 
 def update_grid(ship_location):
@@ -179,8 +189,8 @@ def main():
     main_menu()
     custom_grid = setting_custom_grid_size()
     grid_setup(int(custom_grid[0]), int(custom_grid[1]))
-    ship_location = setting_ship_location()
-    update_grid(ship_location)
+    setting_ship_location()
+    print_grid()
 
 
 main()
