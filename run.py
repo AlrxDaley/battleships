@@ -1,4 +1,5 @@
 import os
+import random
 
 # Global variables
 ANSI_WHITE = "\033[37m"
@@ -132,43 +133,80 @@ def setting_ship_location():
         while x <= 5:
             try:
                 # Assigns the inputed data to the variables
-                yship, xship = input(
+                player_row, player_column = input(
                     str(f"Please select the location for ship num {x}\n")
                 ).split(",")
                 x += 1
 
-                if (int(yship) + 1) > grid_height or (int(xship) + 1) > grid_width:
+                if (int(player_row) + 1) > grid_height or (
+                    int(player_column) + 1
+                ) > grid_width:
                     print("The poition should be within the grid\n")
-                    yship, xship = input(
+                    player_row, player_column = input(
                         f"Please select the location for ship num {x}\n"
                     ).split(",")
                     x += 1
-                    gird_location_checking(yship, xship, ship_location, x)
+                    gird_location_checking(player_row, player_column, ship_location, x)
                     x = int(GLC)
 
                 else:
                     # Assigns the variables to the location list
-                    GLC = gird_location_checking(yship, xship, ship_location, x)
+                    GLC = gird_location_checking(
+                        player_row, player_column, ship_location, x
+                    )
                     x = int(GLC)
             # return the ship location list
             except ValueError:
                 print("You need to enter two values seperated by a ',' \n")
-                x - 1
+
         False
         return ship_location
 
 
-def gird_location_checking(yship, xship, ship_location, x):
+def computer_ship_location():
 
-    if grid[int(yship)][int(xship)] == 1:
+    computer_location = []
+    i = 1
+
+    while i <= 5:
+        try:
+            computer_row = random.sample(range(0, 5), 5)
+            computer_column = random.sample(range(0, 5), 5)
+            print(computer_column, computer_row)
+
+            i += 1
+            if computer_row > grid_height or computer_column > grid_width:
+                computer_row = random.sample(range(0, 5), 5)
+                computer_column = random.sample(range(0, 5), 5)
+                i += 1
+                gird_location_checking(
+                    computer_row, computer_column, computer_location, i
+                )
+
+            else:
+                CGLC = gird_location_checking(
+                    computer_row, computer_column, computer_location, i
+                )
+                i = CGLC
+        except:
+            print("didnt work")
+
+
+def gird_location_checking(row, column, location, x):
+
+    if grid[int(row)][int(column)] == 1:
         print("You cannot put a boat there")
         print(NEW_LINE)
         x -= 1
         return x
 
+    elif grid[int(row)][int(column)] == 2:
+        x = -1
+        return x
+
     else:
-        ship_location.append([yship, xship])
-        update_grid(ship_location)
+        location.append([row, column])
+        update_grid(location)
         return x
 
 
@@ -189,8 +227,8 @@ def main():
     main_menu()
     custom_grid = setting_custom_grid_size()
     grid_setup(int(custom_grid[0]), int(custom_grid[1]))
-    setting_ship_location()
     print_grid()
+    computer_ship_location()
 
 
 main()
