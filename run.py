@@ -46,7 +46,7 @@ def setting_custom_grid_size():
             print("You need to enter two values seperated by a ',' \n")
 
 
-def print_grid():
+def print_grid(grid):
     """Runs through each row checking if one of the index's is equal to 1 and turns it red and then prints the grid
     if the index does not equal 1 then it will be printed in black. It also prints the top row and the left column
     with the values of y so it dynamically changes the cordinates of the grid."""
@@ -83,7 +83,7 @@ def print_grid():
         # the for loop , loops through each row within the grid range executing the code as it loops
         for x in range(1, len(grid[y])):
             # checks if any of the x indexs within each y row is equal to 1
-            if grid[y][x] == 1:
+            if grid[y][x] == 1 or grid[y][x] == 2:
                 # If [x][y] is equal to 1 it applies the colour red to the x index of the y row and then reapplies the black colour
                 row += " " + ANSI_RED + str(grid[y][x]) + ANSI_WHITE
             else:
@@ -112,10 +112,17 @@ def grid_setup(width, height):
     global grid
     # creates a grid using list comprehension
     grid = [[0 for x in range(grid_width)] for y in range(grid_height)]
+
+    global computer_grid
+    computer_grid = [[0 for x in range(grid_width)] for y in range(grid_height)]
+
     global grid_top
     # creates the top line of the cordinates on the grid
     grid_top = [0 for x in range(grid_width)]
-    print_grid()
+
+    global computer_grid_top
+    computer_grid_top = [0 for x in range(grid_width)]
+    print_grid(grid)
 
 
 def setting_ship_location():
@@ -169,27 +176,24 @@ def computer_ship_location():
     i = 1
 
     while i <= 5:
-        try:
-            computer_row = random.sample(range(0, 5), 5)
-            computer_column = random.sample(range(0, 5), 5)
-            print(computer_column, computer_row)
 
+        computer_row = random.randint(1, grid_height - 1)
+        computer_column = random.randint(1, grid_width - 1)
+
+        i += 1
+        if computer_row > grid_height or computer_column > grid_width:
+            computer_row = random.randint(1, 5)
+            computer_column = random.randint(1, 5)
             i += 1
-            if computer_row > grid_height or computer_column > grid_width:
-                computer_row = random.sample(range(0, 5), 5)
-                computer_column = random.sample(range(0, 5), 5)
-                i += 1
-                gird_location_checking(
-                    computer_row, computer_column, computer_location, i
-                )
+            computer_location_checking(
+                computer_row, computer_column, computer_location, i
+            )
 
-            else:
-                CGLC = gird_location_checking(
-                    computer_row, computer_column, computer_location, i
-                )
-                i = CGLC
-        except:
-            print("didnt work")
+        else:
+            CGLC = computer_location_checking(
+                computer_row, computer_column, computer_location, i
+            )
+            i = CGLC
 
 
 def gird_location_checking(row, column, location, x):
@@ -200,35 +204,53 @@ def gird_location_checking(row, column, location, x):
         x -= 1
         return x
 
-    elif grid[int(row)][int(column)] == 2:
-        x = -1
-        return x
-
     else:
         location.append([row, column])
         update_grid(location)
         return x
 
 
+def computer_location_checking(row, column, location, i):
+
+    if computer_grid[row][column] == 2:
+        i -= 1
+        return i
+    else:
+        location.append([row, column])
+        computer_update_grid(location)
+        return i
+
+
 def update_grid(ship_location):
     """Updates the inputed location of the ship using the ship_location variable/list"""
     for x in range(len(ship_location)):
         # assigns the variable the location of the x axis
-        ship_y = ship_location[x][0]
+        player_row = ship_location[x][0]
         # assigns the variable the location of the y axis
-        ship_x = ship_location[x][1]
+        player_column = ship_location[x][1]
         # changes the inputed index into a 1
-        grid[int(ship_y)][int(ship_x)] = 1
+        grid[int(player_row)][int(player_column)] = 1
 
     print(NEW_LINE)
+
+
+def computer_update_grid(computer_location):
+    for x in range(len(computer_location)):
+        computer_row = computer_location[x][0]
+
+        computer_column = computer_location[x][1]
+
+        computer_grid[computer_row][computer_column] = 2
 
 
 def main():
     main_menu()
     custom_grid = setting_custom_grid_size()
     grid_setup(int(custom_grid[0]), int(custom_grid[1]))
-    print_grid()
+    setting_ship_location()
     computer_ship_location()
+    print_grid(grid)
+    print_grid(computer_grid)
 
 
 main()
