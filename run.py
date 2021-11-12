@@ -102,7 +102,7 @@ def print_grid(grid):
 
 
 def grid_setup(width, height):
-    """Creates each row of the grid using list comprehension and varible width and height to change the size of the grid"""
+    """Creates each row of the player and computer grid using list comprehension and definable perameters"""
 
     global grid_width
     grid_width = width + 1
@@ -126,7 +126,9 @@ def grid_setup(width, height):
 
 
 def setting_ship_location():
-    """Takes the input of the cordinates given by the user and adds them to a string and then returns them to be used in another function"""
+    """Creates a list for the row and column values and then runs through a while loop in which the player defines which row and column they wan thereship to be placed.
+    it also checks if the number is bigger then the grid and if it is a message is displayed letting the player know that there selection was out of the grid limits
+    and they need to pick again."""
 
     ship_location = []
     print("------------------------------------------")
@@ -171,6 +173,9 @@ def setting_ship_location():
 
 
 def computer_ship_location():
+    """Creates a list for the row and column values and then runs through a while loop which defines the computer_row and computer_column
+    variables with a random integer between 1 and what the player has set as the grid width and height. it also checks if the number is
+    bigger then the grid and if it is the varisable is then redefined until it isnt greater then the grids limits."""
 
     computer_location = []
     i = 1
@@ -197,9 +202,12 @@ def computer_ship_location():
 
 
 def gird_location_checking(row, column, location, x):
+    """Gets the values of the column and row variables provided and checks against the grid to see of that index location
+    is alreadt filled with a 1 or not, if it is full it subtracts 1 from x and returns it forcing the while loop to step back
+    and allow you to choose another location after displaying an error message , if its empty it is added to the location string"""
 
     if grid[int(row)][int(column)] == 1:
-        print("You cannot put a boat there")
+        print("Youve already put a boat there")
         print(NEW_LINE)
         x -= 1
         return x
@@ -211,6 +219,9 @@ def gird_location_checking(row, column, location, x):
 
 
 def computer_location_checking(row, column, location, i):
+    """Gets the values of the column and row variables provided and checks against the grid to see of that index location
+    is alreadt filled with a 2 or not, if it is full it subtracts 1 from i and returns it forcing the while loop to step back
+    and allow you to choose another location, if its empty it is added to the location string"""
 
     if computer_grid[row][column] == 2:
         i -= 1
@@ -222,7 +233,7 @@ def computer_location_checking(row, column, location, i):
 
 
 def update_grid(ship_location):
-    """Updates the inputed location of the ship using the ship_location variable/list"""
+    """Updates the inputed location of the ship using the ship_location indexs and itterating through using a for loop"""
     for x in range(len(ship_location)):
         # assigns the variable the location of the x axis
         player_row = ship_location[x][0]
@@ -235,6 +246,7 @@ def update_grid(ship_location):
 
 
 def computer_update_grid(computer_location):
+    """updates the location of the computers ships using the computer_location index and iterating through using a for loop"""
     for x in range(len(computer_location)):
         computer_row = computer_location[x][0]
 
