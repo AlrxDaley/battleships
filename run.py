@@ -4,6 +4,7 @@ import random
 # Global variables
 ANSI_WHITE = "\033[37m"
 ANSI_RED = "\033[31m"
+ANSI_BLUE = "\033[0;34m"
 NEW_LINE = os.linesep
 
 grid_width = 0
@@ -151,6 +152,7 @@ def setting_ship_location():
                     int(player_column) + 1
                 ) > grid_width:
                     print("The poition should be within the grid\n")
+                    x -= 1
                     player_row, player_column = input(
                         f"Please select the location for ship num {x}\n"
                     ).split(",")
@@ -199,6 +201,8 @@ def computer_ship_location():
                 computer_row, computer_column, computer_location, i
             )
             i = CGLC
+
+    return computer_location
 
 
 def gird_location_checking(row, column, location, x):
@@ -255,14 +259,46 @@ def computer_update_grid(computer_location):
         computer_grid[computer_row][computer_column] = 2
 
 
+def fire_weapons(location, ship_location):
+
+    while location != [] or ship_location != []:
+        shot_row, shot_column = input(
+            "Enter the location you would like to engage e.g 1,2\n"
+        ).split(",")
+
+        if computer_grid[int(shot_row)][int(shot_column)] == 2:
+            index = location.index([int(shot_row), int(shot_column)])
+            computer_grid[int(shot_row)][int(shot_column)] = 0, ANSI_WHITE
+            print("You've sunk my battleship!!\n")
+            location.pop(index)
+
+        elif computer_grid[int(shot_row)][int(shot_column)] == 0:
+            print("Thats a miss try again\n")
+
+        computer_shot_row = random.randint(1, grid_height - 1)
+        computer_shot_column = random.randint(1, grid_width - 1)
+
+        if grid[computer_shot_row][computer_shot_column] == 1:
+            index = ship_location.index([computer_shot_row, computer_shot_column])
+            grid[computer_shot_row][computer_shot_column] = 0 + ANSI_WHITE
+            print("computer fires and destroys you battleship !!\n")
+            ship_location.pop(index)
+
+        elif grid[int(computer_shot_row)][int(computer_shot_column)] == 0:
+            print("The computer fires and misses\n")
+
+    print("You've sunk all my battleships you win !!\n")
+
+
 def main():
     main_menu()
     custom_grid = setting_custom_grid_size()
     grid_setup(int(custom_grid[0]), int(custom_grid[1]))
-    setting_ship_location()
-    computer_ship_location()
+    ship_location = setting_ship_location()
+    computer_location = computer_ship_location()
     print_grid(grid)
     print_grid(computer_grid)
+    fire_weapons(computer_location, ship_location)
 
 
 main()
