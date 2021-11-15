@@ -23,9 +23,12 @@
    "files.autoSave": "off",
    "workbench.colorTheme": "Default Dark+",
    "editor.defaultFormatter": "HookyQR.beautify",
-   "python.linting.pydocstyleEnabled": true,
+   "python.linting.pydocstyleEnabled": false,
    "[python]": {
       "editor.defaultFormatter": "ms-python.python"
    },
-   "python.formatting.provider": "black"
+   "python.formatting.provider": "black",
+   "python.linting.mypyEnabled": false,
+   "python.linting.banditEnabled": false,
+   "python.linting.prospectorEnabled": true
 }

@@ -1,5 +1,6 @@
 import os
 import random
+import sys
 from time import sleep
 
 # Global variables
@@ -24,9 +25,9 @@ def main_menu():
 
         if selected == "1":
             print("Running Game\n")
-            break
+            main()
         elif selected == "2":
-            quit()
+            sys.exit()
         else:
             print("That isnt an option. Select another option")
 
@@ -58,7 +59,7 @@ def print_grid(player_grid):
     else:
         row = "|"
 
-    for x in range(0, grid_width):
+    for x in enumerate(0, grid_width):
         row += str(x)
         if x > 8:
             row += "|"
@@ -68,7 +69,7 @@ def print_grid(player_grid):
     # Using os.linsep to ensure that the correct line seperator is used based on the OS the program is being run on e.g. \n
     print(row)
 
-    for y in range(1, len(player_grid)):
+    for y in enumerate(1, len(player_grid)):
 
         # Sets the first index of each row to y so the row numbers are icremeneted.
         try:
@@ -82,8 +83,8 @@ def print_grid(player_grid):
         else:
             row = "|" + str(y) + "|"
 
-        # the for loop , loops through each row within the player_grid range executing the code as it loops
-        for x in range(1, len(player_grid[y])):
+        # the for loop , loops through each row within the player_grid enumerate executing the code as it loops
+        for x in enumerate(1, len(player_grid[y])):
             # checks if any of the x indexs within each y row is equal to 1
             if player_grid[y][x] == 1 or player_grid[y][x] == 2:
                 # If [x][y] is equal to 1 it applies the colour red to the x index of the y row and then reapplies the black colour
@@ -118,28 +119,32 @@ def grid_setup(width, height):
 
     global player_grid
     # creates a player_grid using list comprehension
-    player_grid = [[0 for x in range(grid_width)] for y in range(grid_height)]
+    player_grid = [[0 for x in enumerate(grid_width)] for y in enumerate(grid_height)]
 
     global computer_grid
-    computer_grid = [[0 for x in range(grid_width)] for y in range(grid_height)]
+    computer_grid = [[0 for x in enumerate(grid_width)] for y in enumerate(grid_height)]
 
     global player_guess_grid
-    player_guess_grid = [[0 for x in range(grid_width)] for y in range(grid_height)]
+    player_guess_grid = [
+        [0 for x in enumerate(grid_width)] for y in enumerate(grid_height)
+    ]
 
     global grid_top
     # creates the top line of the cordinates on the player_grid
-    grid_top = [0 for x in range(grid_width)]
+    grid_top = [0 for x in enumerate(grid_width)]
 
     global computer_grid_top
-    computer_grid_top = [0 for x in range(grid_width)]
+    computer_grid_top = [0 for x in enumerate(grid_width)]
 
     global guess_top_grid
-    guess_top_grid = [0 for x in range(grid_width)]
+    guess_top_grid = [0 for x in enumerate(grid_width)]
 
 
 def setting_ship_location():
-    """Creates a list for the row and column values and then runs through a while loop in which the player defines which row and column they wan thereship to be placed.
-    it also checks if the number is bigger then the player_grid and if it is a message is displayed letting the player know that there selection was out of the player_grid limits
+    """Creates a list for the row and column values and then runs through a while loop in which the player defines which row and column they wan thereship to
+    be placed.
+    it also checks if the number is bigger then the player_grid and if it is a message is displayed letting the player know that there selection was out of the
+    player_grid limits
     and they need to pick again."""
 
     ship_location = []
@@ -168,20 +173,19 @@ def setting_ship_location():
                         f"Please select the location for ship num {x}\n"
                     ).split(",")
                     x += 1
-                    gird_location_checking(player_row, player_column, ship_location, x)
+                    GLC = gird_location_checking(
+                        player_row, player_column, ship_location, x
+                    )
                     x = int(GLC)
 
                 else:
                     # Assigns the variables to the location list
-                    GLC = gird_location_checking(
-                        player_row, player_column, ship_location, x
-                    )
+                    gird_location_checking(player_row, player_column, ship_location, x)
                     x = int(GLC)
             # return the ship location list
             except ValueError:
                 print("You need to enter two values seperated by a ',' \n")
 
-        False
         return ship_location
 
 
@@ -217,39 +221,47 @@ def computer_ship_location():
 
 
 def gird_location_checking(row, column, location, x):
-    """Gets the values of the column and row variables provided and checks against the player_grid to see of that index location
-    is alreadt filled with a 1 or not, if it is full it subtracts 1 from x and returns it forcing the while loop to step back
-    and allow you to choose another location after displaying an error message , if its empty it is added to the location string"""
+    """Gets the values of the column and row variables provided and checks
+    against the player_grid to see of that index location
+    is alreadt filled with a 1 or not, if it is full it subtracts 1 from x and
+    returns it forcing the while loop to step back
+    and allow you to choose another location after displaying an error message,
+    if its empty it is added to the location string"""
 
     if player_grid[int(row)][int(column)] == 1:
         print("Youve already put a boat there")
         print(NEW_LINE)
         x -= 1
-        return x
 
     else:
         location.append([row, column])
         update_grid(location)
-        return x
+
+    return x
 
 
 def computer_location_checking(row, column, location, i):
-    """Gets the values of the column and row variables provided and checks against the player_grid to see of that index location
-    is alreadt filled with a 2 or not, if it is full it subtracts 1 from i and returns it forcing the while loop to step back
-    and allow you to choose another location, if its empty it is added to the location string"""
+    """Gets the values of the column and row variables provided and checks
+    against the player_grid to see of that index location
+    is alreadt filled with a 2 or not, if it is full it subtracts 1 from i and
+    returns it forcing the while loop to step back
+    and allow you to choose another location, if its empty it is added to the
+    location string"""
 
     if computer_grid[row][column] == 2:
         i -= 1
-        return i
+
     else:
         location.append([row, column])
         computer_update_grid(location)
-        return i
+
+    return i
 
 
 def update_grid(ship_location):
-    """Updates the inputed location of the ship using the ship_location indexs and itterating through using a for loop"""
-    for x in range(len(ship_location)):
+    """Updates the inputed location of the ship using the ship_location indexs
+    and itterating through using a for loop"""
+    for x in enumerate(len(ship_location)):
         # assigns the variable the location of the x axis
         player_row = ship_location[x][0]
         # assigns the variable the location of the y axis
@@ -261,8 +273,9 @@ def update_grid(ship_location):
 
 
 def computer_update_grid(computer_location):
-    """updates the location of the computers ships using the computer_location index and iterating through using a for loop"""
-    for x in range(len(computer_location)):
+    """updates the location of the computers ships using the computer_location
+    index and iterating through using a for loop"""
+    for x in enumerate(len(computer_location)):
         computer_row = computer_location[x][0]
 
         computer_column = computer_location[x][1]
@@ -271,10 +284,10 @@ def computer_update_grid(computer_location):
 
 
 def guess_update_grid_hit(guess_location):
-    for x in range(len(guess_location)):
-        guess_row = guess_location[x][0]
+    for each in enumerate(len(guess_location)):
+        guess_row = guess_location[each][0]
 
-        guess_column = guess_location[x][1]
+        guess_column = guess_location[each][1]
 
         player_guess_grid[int(guess_row)][int(guess_column)] = (
             ANSI_RED + str(0) + ANSI_WHITE
@@ -282,7 +295,7 @@ def guess_update_grid_hit(guess_location):
 
 
 def guess_update_grid_miss(guess_location):
-    for x in range(len(guess_location)):
+    for x in enumerate(len(guess_location)):
         guess_row = guess_location[x][0]
 
         guess_column = guess_location[x][1]
@@ -355,7 +368,6 @@ def fire_weapons(location, ship_location):
 
 
 def main():
-    main_menu()
     custom_grid = setting_custom_grid_size()
     grid_setup(int(custom_grid[0]), int(custom_grid[1]))
     ship_location = setting_ship_location()
@@ -363,6 +375,7 @@ def main():
     print_grid(player_grid)
     print_grid(computer_grid)
     fire_weapons(computer_location, ship_location)
+    main_menu()
 
 
-main()
+main_menu()
