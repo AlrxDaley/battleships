@@ -104,6 +104,7 @@ def print_grid(player_grid):
 
 
 def cls():
+    sleep(1)
     os.system("cls" if os.name == "nt" else "clear")
 
 
@@ -269,19 +270,32 @@ def computer_update_grid(computer_location):
         computer_grid[computer_row][computer_column] = 2
 
 
-def guess_update_grid(guess_location):
-
+def guess_update_grid_hit(guess_location):
     for x in range(len(guess_location)):
         guess_row = guess_location[x][0]
 
         guess_column = guess_location[x][1]
 
-        player_guess_grid[guess_row][guess_column] = int("0" + ANSI_BLUE)
+        player_guess_grid[int(guess_row)][int(guess_column)] = (
+            ANSI_RED + str(0) + ANSI_WHITE
+        )
+
+
+def guess_update_grid_miss(guess_location):
+    for x in range(len(guess_location)):
+        guess_row = guess_location[x][0]
+
+        guess_column = guess_location[x][1]
+
+        player_guess_grid[int(guess_row)][int(guess_column)] = (
+            ANSI_BLUE + str(0) + ANSI_WHITE
+        )
 
 
 def fire_weapons(location, ship_location):
 
-    guess_location = []
+    guess_location_hit = []
+    guess_location_miss = []
 
     while location != [] or ship_location != []:
         try:
@@ -291,24 +305,21 @@ def fire_weapons(location, ship_location):
 
             if computer_grid[int(shot_row)][int(shot_column)] == 2:
                 index = location.index([int(shot_row), int(shot_column)])
-                guess_location.append([shot_row, shot_column])
+                guess_location_hit.append([shot_row, shot_column])
                 computer_grid[int(shot_row)][int(shot_column)] = 0
+
                 print("You've sunk my battleship!!\n")
                 location.pop(index)
                 computer_update_grid(location)
-                guess_update_grid(guess_location)
-                sleep(1)
+                guess_update_grid_hit(guess_location_hit)
                 cls()
                 print_grid(player_guess_grid)
                 print_grid(player_grid)
 
             elif computer_grid[int(shot_row)][int(shot_column)] == 0:
                 print("Thats a miss try again\n")
-                guess_location.append([shot_row, shot_column])
-                guess_update_grid(
-                    guess_location
-                )  # throws a value error for some reason ?
-                sleep(1)
+                guess_location_miss.append([shot_row, shot_column])
+                guess_update_grid_miss(guess_location_miss)
                 cls()
                 print_grid(player_guess_grid)
                 print_grid(player_grid)
@@ -328,14 +339,12 @@ def fire_weapons(location, ship_location):
                 print("computer fires and destroys you battleship !!\n")
                 ship_location.pop(index)
                 update_grid(ship_location)
-                sleep(1)
                 cls()
                 print_grid(player_guess_grid)
                 print_grid(player_grid)
 
             elif player_grid[int(computer_shot_row)][int(computer_shot_column)] == 0:
                 print("The computer fires and misses\n")
-                sleep(1)
                 cls()
                 print_grid(player_guess_grid)
                 print_grid(player_grid)
