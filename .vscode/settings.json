@@ -1,7 +1,7 @@
 {
    "python.linting.pylintEnabled": false,
    "python.linting.enabled": true,
-   "python.linting.pycodestyleEnabled": false,
+   "python.linting.pycodestyleEnabled": true,
    "python.linting.flake8Enabled": false,
    "python.terminal.activateEnvironment": false,
    "python.formatting.autopep8Path": "/home/gitpod/.pyenv/shims/autopep8",
@@ -30,5 +30,5 @@
    "python.formatting.provider": "black",
    "python.linting.mypyEnabled": false,
    "python.linting.banditEnabled": false,
-   "python.linting.prospectorEnabled": true
+   "python.linting.prospectorEnabled": false
 }
