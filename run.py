@@ -303,66 +303,72 @@ def guess_update_grid_miss(guess_location):
         )
 
 
-def fire_weapons(location, ship_location):
+def game_loop(location, ship_location):
+
+    while location != [] or ship_location != []:
+
+        player_turn(location)
+
+        computer_turn(ship_location)
+
+
+def player_turn(location):
 
     guess_location_hit = []
     guess_location_miss = []
 
-    while location != [] or ship_location != []:
-        try:
-            shot_row, shot_column = input(
-                "Enter the location you would like to engage e.g 1,2\n"
-            ).split(",")
+    try:
+        shot_row, shot_column = input(
+            "Enter the location you would like to engage e.g 1,2\n"
+        ).split(",")
 
-            if computer_grid[int(shot_row)][int(shot_column)] == 2:
-                index = location.index([int(shot_row), int(shot_column)])
-                guess_location_hit.append([shot_row, shot_column])
-                computer_grid[int(shot_row)][int(shot_column)] = 0
+        if computer_grid[int(shot_row)][int(shot_column)] == 2:
+            index = location.index([int(shot_row), int(shot_column)])
+            guess_location_hit.append([shot_row, shot_column])
+            computer_grid[int(shot_row)][int(shot_column)] = 0
 
-                print("You've sunk my battleship!!\n")
-                location.pop(index)
-                computer_update_grid(location)
-                guess_update_grid_hit(guess_location_hit)
-                cls()
-                print_grid(player_guess_grid)
-                print_grid(player_grid)
+            print("You've sunk my battleship!!\n")
+            location.pop(index)
+            computer_update_grid(location)
+            guess_update_grid_hit(guess_location_hit)
+            cls()
+            print_grid(player_guess_grid)
+            print_grid(player_grid)
 
-            elif computer_grid[int(shot_row)][int(shot_column)] == 0:
-                print("Thats a miss try again\n")
-                guess_location_miss.append([shot_row, shot_column])
-                guess_update_grid_miss(guess_location_miss)
-                cls()
-                print_grid(player_guess_grid)
-                print_grid(player_grid)
+        elif computer_grid[int(shot_row)][int(shot_column)] == 0:
+            print("Thats a miss try again\n")
+            guess_location_miss.append([shot_row, shot_column])
+            guess_update_grid_miss(guess_location_miss)
+            cls()
+            print_grid(player_guess_grid)
+            print_grid(player_grid)
 
-        except IndexError:
-            print("Thats not wihtin player_grid limits try again\n")
-        except ValueError:
-            print("You need to enter a valid postion using the 'y,x' format")
+    except IndexError:
+        print("Thats not wihtin player_grid limits try again\n")
+    except ValueError:
+        print("You need to enter a valid postion using the 'y,x' format")
 
-        try:
-            computer_shot_row = random.randint(1, grid_height - 1)
-            computer_shot_column = random.randint(1, grid_width - 1)
 
-            if player_grid[computer_shot_row][computer_shot_column] == 1:
-                index = ship_location.index([computer_shot_row, computer_shot_column])
-                player_grid[computer_shot_row][computer_shot_column] = 0
-                print("computer fires and destroys you battleship !!\n")
-                ship_location.pop(index)
-                update_grid(ship_location)
-                cls()
-                print_grid(player_guess_grid)
-                print_grid(player_grid)
+def computer_turn(ship_location):
 
-            elif player_grid[int(computer_shot_row)][int(computer_shot_column)] == 0:
-                print("The computer fires and misses\n")
-                cls()
-                print_grid(player_guess_grid)
-                print_grid(player_grid)
+    computer_shot_row = random.randint(1, grid_height - 1)
+    computer_shot_column = random.randint(1, grid_width - 1)
 
-        except ValueError:
-            continue
-    print("You've sunk all my battleships you win !!\n")
+    if player_grid[computer_shot_row][computer_shot_column] == 1:
+        index = ship_location.index([computer_shot_row, computer_shot_column])
+        player_grid[computer_shot_row][computer_shot_column] = 0
+        print("computer fires and destroys you battleship !!\n")
+        ship_location.pop(index)
+        update_grid(ship_location)
+        cls()
+        print_grid(player_guess_grid)
+        print_grid(player_grid)
+
+    elif player_grid[int(computer_shot_row)][int(computer_shot_column)] == 0:
+        print("The computer fires and misses\n")
+        cls()
+        print_grid(player_guess_grid)
+        print_grid(player_grid)
 
 
 def main():
@@ -372,7 +378,7 @@ def main():
     computer_location = computer_ship_location()
     print_grid(player_grid)
     print_grid(computer_grid)
-    fire_weapons(computer_location, ship_location)
+    game_loop(computer_location, ship_location)
     main_menu()
 
 
