@@ -309,7 +309,17 @@ def game_loop(location, ship_location):
 
         player_turn(location)
 
+        if location == []:
+            print("You have sunk all the enemies battleships !!")
+            print("You win !!")
+            break
+
         computer_turn(ship_location)
+
+        if ship_location == []:
+            print("The enemy has sunk all your battleships !!")
+            print("You loose !!")
+            break
 
 
 def player_turn(location):
@@ -376,8 +386,8 @@ def main():
     grid_setup(int(custom_grid[0]), int(custom_grid[1]))
     ship_location = setting_ship_location()
     computer_location = computer_ship_location()
+    cls()
     print_grid(player_grid)
-    print_grid(computer_grid)
     game_loop(computer_location, ship_location)
     main_menu()
 
