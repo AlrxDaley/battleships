@@ -5,6 +5,9 @@ in heroku.
 
 The aim of the game is to destroy all of the computers battleships before it destroys all of yours.
 
+The purpose of this game is to let people play battleships against a computer with a range of difficulty deopending on the grid
+size they have chosen. The value it provides is an engaging game that is fluid and enjoyable
+
 ["Link to live terminal"](https://cdbattleships.herokuapp.com/)
 
 ![how it looks on a web page](images\web_page_image.png)
