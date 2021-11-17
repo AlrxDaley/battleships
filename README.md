@@ -1,24 +1,20 @@
+# Command line Battleships
 
-* Your code must be placed in the `run.py` file
-* Your dependencies must be placed in the `requirements.txt` file
-* Do not edit any of the other files or your code may not deploy properly
+command line battleships is a battleship game written in python and played in the terminal, which uses the code institute mocmk terminal to run
+in heroku.
 
-## Creating the Heroku app
+The aim of the game is to destroy all of the computers battleships before it destroys all of yours.
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+["Link to live terminal"](https://cdbattleships.herokuapp.com/)
 
-1. `heroku/python`
-2. `heroku/nodejs`
+![how it looks on a web page](images\web_page_image.png)
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+## Rules/How to play
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+Command line battlehips is based on the classic battleships game.
 
-Connect your GitHub repository and deploy as normal.
+This game works by having you that player define the size fo the grid 
+then enter the cordinates of you ships using the "y,x" format.
 
-## Constraints
-
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
-
------
-Happy coding!
+this then displays a board with all of your ships marked on it and 
+another input request that asks what cordinates you would like to engage

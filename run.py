@@ -46,12 +46,14 @@ def setting_custom_grid_size():
             print("You need to enter two values seperated by a ',' \n")
 
 
-def print_grid(player_grid):
+def print_grid(player_grid, title_text):
     """Run through each row checking if one of the index's is equal to 1 and
     turns it red and then prints the player_grid if the index does not equal 1
     then it will be printed in black. It also prints the top row and the left
     column with the values of y so it dynamically changes the cordinates of the
     player_grid."""
+
+    print(title_text)
 
     # Checks if the width is greater then 9 and icreases the size of each cell on the grid
     if grid_width > 9:
@@ -371,8 +373,8 @@ def player_turn(location):
             computer_update_grid(location)
             guess_update_grid_hit(guess_location_hit)
             cls()
-            print_grid(player_guess_grid)
-            print_grid(player_grid)
+            print_grid(player_guess_grid, "Enemy grid:")
+            print_grid(player_grid, "Player grid:")
 
         elif computer_grid[int(shot_row)][int(shot_column)] == 0:
             # adds the inputs to the miss location list.
@@ -381,8 +383,8 @@ def player_turn(location):
             guess_location_miss.append([shot_row, shot_column])
             guess_update_grid_miss(guess_location_miss)
             cls()
-            print_grid(player_guess_grid)
-            print_grid(player_grid)
+            print_grid(player_guess_grid, "Enemy grid:")
+            print_grid(player_grid, "Player grid:")
 
     # catches input errors
     except IndexError:
@@ -424,7 +426,7 @@ def main():
     ship_location = setting_ship_location()
     computer_location = computer_ship_location()
     cls()
-    print_grid(player_grid)
+    print_grid(player_grid, "Player grid:")
     game_loop(computer_location, ship_location)
     main_menu()
 
