@@ -75,7 +75,7 @@ Sloved Bugs:
 - When adding the ship locations to the list if you had entered an input that didnt conform to the format it was still added to the list:
     - i fixed this buy adding a check to see if the input matched the standard formatting and if it didnt they had to re input their 
     answer correctly. if it did match the format the program would carry on like usual.
-
+---
 unsloved bugs:
 - when creating the grid you cannot make the grid height greater then the grid width:
     - i have stopped errors breaking the code by addinf if statment to catch the errors and create a pre defined grid size.
@@ -85,9 +85,21 @@ unsloved bugs:
 -  If I reuse a location that was a hit on the computer ship, it says miss and turns the location blue. Should say you’ve already guessed that location
 
 ### Validator Testing
+---
 - PEP8
     - Only error was E501 (Line too long)
 
 ## Deployment
-
+---
 This Project was deployed using code institutes mock terminal for heroku.
+- Steps for deployment:
+    - Fork or clone repository
+    - Create a new Herokuy app
+    - Set the buildpacks to 'python' and 'nodeJS' in that order
+    - link the Heroku app to the repository
+    - Click deploy
+
+## Credits
+---
+- Code insitute for deployment terminal
+- Wikipedia for the details on the battleship game

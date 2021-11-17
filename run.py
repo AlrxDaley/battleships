@@ -42,7 +42,7 @@ def setting_custom_grid_size():
             grid_width, grid_height = input(
                 "Please enter your desired player_grid size (You cannot have more rows than columns):\n"
             ).split(",")
-            if grid_width > 49 or grid_height > 49:
+            if int(grid_width) > 49 or int(grid_height) > 49:
                 print("The grid must be smaller then 50x50")
             else:
                 return grid_width, grid_height, False
