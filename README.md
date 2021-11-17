@@ -31,9 +31,13 @@ have destroyed all enemy ships.
     - you get to place your ships
     - you cannot see the enemy ships unless they are hit
 
+![Definable grid and ship location](images\grid_and_ship.png)
+
 - Personal guess grid to show you where you have guessed and if its a hit or a miss
 - You play against the computer 
 - Accepts user inputs for multiple functions
+
+![player and guess grid](images\player_and_guess_enemy_grid.png)
 
 - Error checking
     - Cannot enter random characters that dont conform to the proper format
@@ -70,19 +74,19 @@ by the player to store the grid size.
 ---
 Sloved Bugs:
 - when a function was called inside of a for loop i restarted the for loop:
-    - i fixed this buy using a while loop and incrementation to control the iteration better
+    - I fixed this buy using a while loop and incrementation to control the iteration better
 
 - When adding the ship locations to the list if you had entered an input that didnt conform to the format it was still added to the list:
-    - i fixed this buy adding a check to see if the input matched the standard formatting and if it didnt they had to re input their 
+    - I fixed this buy adding a check to see if the input matched the standard formatting and if it didnt they had to re input their 
     answer correctly. if it did match the format the program would carry on like usual.
 ---
 unsloved bugs:
-- when creating the grid you cannot make the grid height greater then the grid width:
-    - i have stopped errors breaking the code by addinf if statment to catch the errors and create a pre defined grid size.
+- When creating the grid you cannot make the grid height greater then the grid width:
+    - I have stopped errors breaking the code by addinf if statment to catch the errors and create a pre defined grid size.
 
-- if you enter an invalid location when the player moves it just moves onto the computers turn and doesn’t let the user try again   
+- If you enter an invalid location when the player moves it just moves onto the computers turn and doesn’t let the user try again   
 
--  If I reuse a location that was a hit on the computer ship, it says miss and turns the location blue. Should say you’ve already guessed that location
+- If I reuse a location that was a hit on the computer ship, it says miss and turns the location blue. Should say you’ve already guessed that location
 
 ### Validator Testing
 ---
