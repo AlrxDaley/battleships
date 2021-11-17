@@ -34,6 +34,7 @@ def setting_custom_grid_size():
     """Take input for grid size and makes sure it matches formatting"""
     print("\n-----------------------------------------------")
     print("To set player_grid size please use 'Y,X' format")
+    print("It cannot be any larger then 50x50")
     print("-----------------------------------------------\n")
     while True:
         # Assigns inputed values to height and width variables and checks if it matches the required format and returns the values.
@@ -41,7 +42,10 @@ def setting_custom_grid_size():
             grid_width, grid_height = input(
                 "Please enter your desired player_grid size (You cannot have more rows than columns):\n"
             ).split(",")
-            return grid_width, grid_height, False
+            if grid_width > 49 or grid_height > 49:
+                print("The grid must be smaller then 50x50")
+            else:
+                return grid_width, grid_height, False
         except ValueError:
             print("You need to enter two values seperated by a ',' \n")
 
