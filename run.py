@@ -415,8 +415,8 @@ def computer_turn(ship_location):
     elif player_grid[int(computer_shot_row)][int(computer_shot_column)] == 0:
         print("The computer fires and misses\n")
         cls()
-        print_grid(player_guess_grid)
-        print_grid(player_grid)
+        print_grid(player_guess_grid, "Enemy grid:")
+        print_grid(player_grid, "Player grid:")
 
 
 def main():
