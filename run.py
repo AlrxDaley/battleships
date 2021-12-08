@@ -14,7 +14,8 @@ grid_height = 0
 
 
 def main_menu():
-    """Print the starting menu for the game using inputs to run the main function or quit the game"""
+    """Print the starting menu for the game using inputs
+    to run the main function or quit the game"""
     while True:
         print("-----------\nBATTLESHIPS\n-----------")
         print("1.Play Game\n2.Quit\n")
@@ -37,10 +38,12 @@ def setting_custom_grid_size():
     print("It cannot be any larger then 50x50")
     print("-----------------------------------------------\n")
     while True:
-        # Assigns inputed values to height and width variables and checks if it matches the required format and returns the values.
+        # Assigns inputed values to height and width variables
+        # and checks if it matches the required format and returns the values.
         try:
             grid_width, grid_height = input(
-                "Please enter your desired player_grid size (You cannot have more rows than columns):\n"
+                "Please enter your desired player_grid size \
+                (You cannot have more rows than columns):\n"
             ).split(",")
             if int(grid_width) > 49 or int(grid_height) > 49:
                 print("The grid must be smaller then 50x50")
@@ -59,12 +62,14 @@ def print_grid(player_grid, title_text):
 
     print(title_text)
 
-    # Checks if the width is greater then 9 and icreases the size of each cell on the grid
+    # Checks if the width is greater then 9 and
+    # icreases the size of each cell on the grid
     if grid_width > 9:
         row = "| "
     else:
         row = "|"
-    # Check to see if width is smaller then 8 to decrease the size of each cell on the grid
+    # Check to see if width is smaller then 8 to
+    # decrease the size of each cell on the grid
     for x in range(0, grid_width):
         row += str(x)
         if x > 8:
@@ -76,7 +81,8 @@ def print_grid(player_grid, title_text):
 
     for y in range(1, len(player_grid)):
 
-        # Sets the first index of each row to y so the row numbers are icremeneted.
+        # Sets the first index of each row to y
+        # so the row numbers are icremeneted.
         try:
             player_grid[0][y] = y
         except IndexError:
@@ -88,14 +94,17 @@ def print_grid(player_grid, title_text):
         else:
             row = "|" + str(y) + "|"
 
-        # the for loop , loops through each row within the player_grid range executing the code as it loops
+        # the for loop , loops through each row within the
+        # player_grid range executing the code as it loops
         for x in range(1, len(player_grid[y])):
             # checks if any of the x indexs within each y row is equal to 1
             if player_grid[y][x] == 1 or player_grid[y][x] == 2:
-                # If [x][y] is equal to 1 it applies the colour red to the x index of the y row and then reapplies the black colour
+                # If [x][y] is equal to 1 it applies the colour red to
+                # the x index of the y row and then reapplies the black colour
                 row += " " + ANSI_RED + str(player_grid[y][x]) + ANSI_WHITE
             else:
-                # if x does not equal 1 it adds the contents of player_grid[y][x] to the row string
+                # if x does not equal 1 it adds the contents
+                # of player_grid[y][x] to the row string
                 row += " " + str(player_grid[y][x])
 
             if x < grid_width:
@@ -107,7 +116,8 @@ def print_grid(player_grid, title_text):
         # prints a square bracket at the end of each completed row.
         print(row + "|")
 
-    # Using os.linsep to ensure that the correct line seperator is used based on
+    # Using os.linsep to ensure that the correct
+    # line seperator is used based on
     # the OS the program is being run on e.g. \n
     print(NEW_LINE)
 
@@ -119,7 +129,8 @@ def cls():
 
 
 def grid_setup(width, height):
-    """Creates each row of the player and computer player_grid using list comprehension and definable perameters"""
+    """Creates each row of the player and computer player_grid \
+        using list comprehension and definable perameters"""
 
     global grid_width
     grid_width = width + 1
@@ -128,15 +139,18 @@ def grid_setup(width, height):
 
     # Creates the player_grid using list comprehension
     global player_grid
-    player_grid = [[0 for x in range(grid_width)] for y in range(grid_height)]
+    player_grid = \
+        [[0 for x in range(grid_width)] for y in range(grid_height)]
 
     # Creates the computer_grid using list comprehension
     global computer_grid
-    computer_grid = [[0 for x in range(grid_width)] for y in range(grid_height)]
+    computer_grid = \
+        [[0 for x in range(grid_width)] for y in range(grid_height)]
 
     # Creates the player_guess_grid using list comprehension
     global player_guess_grid
-    player_guess_grid = [[0 for x in range(grid_width)] for y in range(grid_height)]
+    player_guess_grid = \
+        [[0 for x in range(grid_width)] for y in range(grid_height)]
 
     # Creates the top line of the player_grid
     global grid_top
@@ -152,10 +166,12 @@ def grid_setup(width, height):
 
 
 def setting_ship_location():
-    """Creates a list for the row and column values and then runs through a while loop in which the player defines which row and column they wan thereship to
-    be placed.
-    it also checks if the number is bigger then the player_grid and if it is a message is displayed letting the player know that there selection was out of the
-    player_grid limits
+    """Creates a list for the row and column values and then runs through
+    a while loop in which the player defines which row and column
+    they want theres hip tobe placed.
+    it also checks if the number is bigger then the player_grid
+    and if it is a message is displayed letting the player know that
+    there selection was out of the player_grid limits
     and they need to pick again."""
 
     ship_location = []
@@ -175,7 +191,10 @@ def setting_ship_location():
                 ).split(",")
                 x += 1
 
-                # Checks if the inputed option are within the range of the grid and allows user to redifine them incase they arn't, also calls checking functions
+                # Checks if the inputed option are within the range
+                # of the grid and allows user to redifine
+                # them incase they arn't,
+                # also calls checking functions
                 if (int(player_row) + 1) > grid_height or (
                     int(player_column) + 1
                 ) > grid_width:
@@ -205,9 +224,13 @@ def setting_ship_location():
 
 
 def computer_ship_location():
-    """Creates a list for the row and column values and then runs through a while loop which defines the computer_row and computer_column
-    variables with a random integer between 1 and what the player has set as the player_grid width and height. it also checks if the number is
-    bigger then the player_grid and if it is the varisable is then redefined until it isnt greater then the grids limits."""
+    """Creates a list for the row and column values and then runs
+    through a while loop which defines the computer_row
+    and computer_column variables with a random integer between 1
+    and what the player has set as the player_grid width and height.
+    it also checks if the number is bigger then the player_grid and
+    if it is the varisable is then redefined until
+    it isnt greater then the grids limits."""
 
     computer_location = []
     i = 1
@@ -219,7 +242,8 @@ def computer_ship_location():
         computer_column = random.randint(1, grid_width - 1)
 
         i += 1
-        # Checks if random ints are in grid range and redifines them if not, also calls the checking function
+        # Checks if random ints are in grid range and redifines
+        # them if not, also calls the checking function
         if computer_row > grid_height or computer_column > grid_width:
             computer_row = random.randint(1, 5)
             computer_column = random.randint(1, 5)
@@ -333,7 +357,8 @@ def guess_update_grid_miss(guess_location):
 
 def game_loop(location, ship_location):
 
-    # loops through calling player and computer turn functions and stops when locations are empty.
+    # loops through calling player and computer turn
+    # functions and stops when locations are empty.
 
     while location != [] or ship_location != []:
 
@@ -364,7 +389,8 @@ def player_turn(location):
         ).split(",")
 
         if computer_grid[int(shot_row)][int(shot_column)] == 2:
-            # checks if inputs are an index within the location and assigns to a index variable.
+            # checks if inputs are an index within the
+            # location and assigns to a index variable.
             index = location.index([int(shot_row), int(shot_column)])
             # adds input to the hit location.
             guess_location_hit.append([shot_row, shot_column])
@@ -403,7 +429,8 @@ def computer_turn(ship_location):
     computer_shot_column = random.randint(1, grid_width - 1)
 
     if player_grid[computer_shot_row][computer_shot_column] == 1:
-        # checks if inputs are an index within the location and assigns to a index variable.
+        # checks if inputs are an index within the
+        # location and assigns to a index variable.
         index = ship_location.index([computer_shot_row, computer_shot_column])
         # adds random integers to hit location
         player_grid[computer_shot_row][computer_shot_column] = 0
