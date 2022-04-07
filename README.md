@@ -94,7 +94,7 @@ unsloved bugs:
 ### Validator Testing
 ---
 - PEP8
-    - Only error was E501 (Line too long)
+    - No errors
 
 ## Deployment
 ---
